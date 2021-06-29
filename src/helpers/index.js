@@ -5,6 +5,12 @@ export const formHierarchy = (list) => {
     if (employee.id === employee.manager) {
       root = { ...employee };
       rootIndex = i;
+    } else {
+      let index = list.findIndex((el) => employee.manager === el.id);
+      if (index === -1) {
+        root = { ...employee };
+        rootIndex = i;
+      }
     }
   });
   list.splice(rootIndex, 1);

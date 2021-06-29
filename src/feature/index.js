@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { formHierarchy } from "../helpers";
 
 import EmployeeCard from "./EmployeeCard";
 import "./index.css";
@@ -7,6 +8,7 @@ import DragDropChart from "./Tree";
 function App() {
   const [employees, setEmployees] = useState([]);
   const [filteredArray, setFilteredArray] = useState([]);
+  const [teamArray, setTeamArray] = useState({});
   const [teams, setTeams] = useState([]);
   const [hierarchy, setHierarchy] = useState({});
   const [searchText, setSearchText] = useState("");
@@ -26,7 +28,7 @@ function App() {
     fetch("/api/tree")
       .then((res) => res.json())
       .then((json) => {
-        setHierarchy(json);
+        setHierarchy(formHierarchy(JSON.parse(JSON.stringify(json))));
       });
   }, []);
 
@@ -46,10 +48,14 @@ function App() {
 
   const onFilter = (event) => {
     setSelectedFilter(event.target.value);
-    let list = employees;
-    let filteredArray =
-      list.length && list.filter((data) => data.team === event.target.value);
+    let filteredArray = employees.filter(
+      (data) => data.team === event.target.value
+    );
     setFilteredArray(filteredArray.length > 0 ? filteredArray : employees);
+    const hList = formHierarchy(
+      filteredArray.length > 0 ? filteredArray : employees
+    );
+    setHierarchy(hList);
   };
 
   const getArray = () => {

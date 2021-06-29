@@ -1,5 +1,4 @@
 import { createServer, Model } from "miragejs";
-import { formHierarchy } from "./helpers";
 
 export function makeServer({ environment = "test" } = {}) {
   let EMPLOYEES = [
@@ -86,7 +85,7 @@ export function makeServer({ environment = "test" } = {}) {
       }));
 
       this.get("/tree", () => {
-        return formHierarchy(EMPLOYEES);
+        return EMPLOYEES;
       });
     },
   });
