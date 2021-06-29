@@ -8,7 +8,6 @@ import DragDropChart from "./Tree";
 function App() {
   const [employees, setEmployees] = useState([]);
   const [filteredArray, setFilteredArray] = useState([]);
-  const [teamArray, setTeamArray] = useState({});
   const [teams, setTeams] = useState([]);
   const [hierarchy, setHierarchy] = useState({});
   const [searchText, setSearchText] = useState("");
