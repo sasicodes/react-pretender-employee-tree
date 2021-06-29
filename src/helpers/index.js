@@ -21,7 +21,7 @@ export const formHierarchy = (list) => {
         return d.manager === parentId;
       })
       .forEach(function (d) {
-        var cd = d;
+        let cd = d;
         cd.children = sortEmployees(employees, d.id);
         return node.push(cd);
       });
