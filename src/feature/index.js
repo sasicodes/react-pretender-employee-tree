@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { formHierarchy } from "../helpers";
 
+import { constructHierarchyObject } from "../helpers";
 import EmployeeCard from "./EmployeeCard";
 import "./index.css";
 import DragDropChart from "./Tree";
 
-function App() {
+function Feature() {
   const [employees, setEmployees] = useState([]);
   const [filteredArray, setFilteredArray] = useState([]);
   const [teams, setTeams] = useState([]);
@@ -14,22 +14,29 @@ function App() {
   const [selectedFilter, setSelectedFilter] = useState("");
 
   useEffect(() => {
+    /** Fetch employees and teams */
+    fetchEmployees();
+    fetchTeams();
+  }, []);
+
+  const fetchEmployees = () => {
     fetch("/api/employees")
       .then((res) => res.json())
       .then((json) => {
         setEmployees(json.employees);
+        setHierarchy(
+          constructHierarchyObject(JSON.parse(JSON.stringify(json.employees)))
+        );
       });
+  };
+
+  const fetchTeams = () => {
     fetch("/api/teams")
       .then((res) => res.json())
       .then((json) => {
         setTeams(json.teams);
       });
-    fetch("/api/tree")
-      .then((res) => res.json())
-      .then((json) => {
-        setHierarchy(formHierarchy(JSON.parse(JSON.stringify(json))));
-      });
-  }, []);
+  };
 
   const onSearch = (event) => {
     setSearchText(event.target.value);
@@ -51,13 +58,13 @@ function App() {
       (data) => data.team === event.target.value
     );
     setFilteredArray(filteredArray.length > 0 ? filteredArray : employees);
-    const hList = formHierarchy(
+    const hierarchyObject = constructHierarchyObject(
       filteredArray.length > 0 ? filteredArray : employees
     );
-    setHierarchy(hList);
+    setHierarchy(hierarchyObject);
   };
 
-  const getArray = () => {
+  const getRenderArray = () => {
     if (filteredArray.length) {
       return filteredArray;
     }
@@ -84,7 +91,7 @@ function App() {
           </select>
         </div>
         <div className="list mb-30">
-          {getArray().map((employee, index) => (
+          {getRenderArray().map((employee, index) => (
             <EmployeeCard key={index} className="mt-10" {...employee} />
           ))}
         </div>
@@ -99,4 +106,4 @@ function App() {
   );
 }
 
-export default App;
+export default Feature;

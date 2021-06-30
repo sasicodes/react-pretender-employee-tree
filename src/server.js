@@ -83,10 +83,6 @@ export function makeServer({ environment = "test" } = {}) {
       this.get("/teams", () => ({
         teams: ["HEAD", "IT", "SALES"],
       }));
-
-      this.get("/tree", () => {
-        return EMPLOYEES;
-      });
     },
   });
 

@@ -1,5 +1,6 @@
 import React from "react";
 import OrganizationChart from "@dabeng/react-orgchart";
+
 import EmployeeCard from "./EmployeeCard";
 
 const DragDropChart = ({ hierarchy }) => {

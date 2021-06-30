@@ -1,4 +1,4 @@
-export const formHierarchy = (list) => {
+export const constructHierarchyObject = (list) => {
   let root = {};
   let rootIndex;
   list.forEach((employee, i) => {
