@@ -53,22 +53,34 @@ function Feature() {
   };
 
   const onFilter = (event) => {
+    if (event.target.value !== "") {
+      let filteredArray = employees.filter(
+        (data) => data.team === event.target.value
+      );
+      console.log(
+        "🚀 ~ file: index.js ~ line 60 ~ onFilter ~ filteredArray",
+        filteredArray
+      );
+      setFilteredArray(filteredArray);
+      const hierarchyObject = constructHierarchyObject(
+        JSON.parse(JSON.stringify(filteredArray))
+      );
+      setHierarchy(hierarchyObject);
+    } else {
+      setFilteredArray([]);
+      setHierarchy(
+        constructHierarchyObject(JSON.parse(JSON.stringify(employees)))
+      );
+    }
     setSelectedFilter(event.target.value);
-    let filteredArray = employees.filter(
-      (data) => data.team === event.target.value
-    );
-    setFilteredArray(filteredArray.length > 0 ? filteredArray : employees);
-    const hierarchyObject = constructHierarchyObject(
-      filteredArray.length > 0 ? filteredArray : employees
-    );
-    setHierarchy(hierarchyObject);
   };
 
   const getRenderArray = () => {
-    if (filteredArray.length) {
+    if (filteredArray.length > 0) {
       return filteredArray;
+    } else {
+      return employees;
     }
-    return employees;
   };
 
   return (
