@@ -57,10 +57,6 @@ function Feature() {
       let filteredArray = employees.filter(
         (data) => data.team === event.target.value
       );
-      console.log(
-        "🚀 ~ file: index.js ~ line 60 ~ onFilter ~ filteredArray",
-        filteredArray
-      );
       setFilteredArray(filteredArray);
       const hierarchyObject = constructHierarchyObject(
         JSON.parse(JSON.stringify(filteredArray))
