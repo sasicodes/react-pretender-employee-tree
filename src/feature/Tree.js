@@ -11,7 +11,7 @@ const DragDropChart = ({ hierarchy }) => {
       collapsible={false}
       NodeTemplate={({ nodeData }) => {
         const selectNode = () => {
-          alert(
+          console.log(
             nodeData.name +
               " - " +
               nodeData.designation +
